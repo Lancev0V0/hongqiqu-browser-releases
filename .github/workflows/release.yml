@@ -1,0 +1,29 @@
+name: Build and publish Windows release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test update validation and recovery
+        shell: pwsh
+        run: ./test.ps1
+      - name: Build verified Firefox bundle and installer
+        shell: pwsh
+        run: ./build.ps1 -Version ($env:GITHUB_REF_NAME.Substring(1))
+      - name: Publish complete release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          gh release create $tag --draft --title "红旗渠爱国浏览器 $tag" --notes-file release-notes.md
+          if ($LASTEXITCODE -ne 0) { throw 'Draft creation failed' }
+          gh release upload $tag dist/*.exe dist/*.zip dist/SHA256SUMS.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Asset upload failed; draft remains unpublished' }
+          gh release edit $tag --draft=false --latest
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }

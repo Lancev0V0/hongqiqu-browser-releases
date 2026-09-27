@@ -1,0 +1,21 @@
+/* 红旗渠爱国浏览器 · 米白红金版；Firefox 原生顶部横向标签。 */
+:root{--lwt-accent-color:#f1e8dd!important;--lwt-text-color:#692018!important;--toolbar-bgcolor:#faf7f0!important;--toolbar-color:#512d20!important;--toolbar-field-background-color:#f0e9e1!important;--toolbar-field-color:#512d20!important;--tab-selected-bgcolor:#ffffff!important;--toolbarbutton-icon-fill:#9e1018!important;--focus-outline-color:#a50d17!important}
+#navigator-toolbox{background:#f1e8dd!important;border:0!important}
+#TabsToolbar{background:#f1e8dd!important;padding-inline-start:9px!important;min-height:44px!important}
+#tabbrowser-tabs{--tab-min-height:36px!important;--tab-block-margin:4px!important}
+.tabbrowser-tab:not([pinned])[fadein]{min-width:120px!important;max-width:240px!important}
+.tabbrowser-tab{font-size:13px!important}.tab-content{padding-inline:12px!important;gap:5px!important}
+.tab-background{border-radius:9px!important;border:1px solid transparent!important;box-shadow:none!important}
+.tab-background[selected]{background:#fffdf9!important;border-color:#e2d1bf!important;box-shadow:0 1px 3px #6636190d!important}
+.tab-close-button{opacity:.66}.tab-close-button:hover{opacity:1}
+#tabs-newtab-button{margin-inline:4px!important}
+#nav-bar{background:#fdfaf5!important;min-height:58px!important;padding:6px 14px!important;box-shadow:none!important;border:0!important}
+#nav-bar-customization-target{align-items:center!important}#nav-bar-customization-target>toolbarspring{display:none!important}
+#back-button{order:0!important}#forward-button{order:1!important}#stop-reload-button{order:2!important}#urlbar-container{order:3!important;flex:1!important;margin-inline:15px!important;min-width:160px!important}#sidebar-button{order:8!important}#nav-bar-customization-target>.toolbarbutton-1{order:5}
+#urlbar-background{border-radius:16px!important;border-color:transparent!important;box-shadow:none!important}#urlbar[focused] #urlbar-background{border-color:#ba7969!important}#urlbar-input{font-size:14px!important}#urlbar[breakout][breakout-extend] #urlbar-background{border-radius:14px!important}
+#browser{background:#faf7f0!important}
+#tabbrowser-tabbox{margin:0!important;border-radius:0!important;overflow:clip!important;box-shadow:none!important;border:0!important;border-top:1px solid #e5d8c7!important}
+@media(max-width:850px){#nav-bar{padding-inline:5px!important}#urlbar-container{margin-inline:6px!important}}
+
+#home-button{order:3!important}#urlbar-container{order:4!important}
+#urlbar-results{--urlbarView-highlight-background:#f5e7df!important;--urlbarView-highlight-color:#63261e!important}

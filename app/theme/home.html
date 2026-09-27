@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><title>红旗渠爱国浏览器</title>
+<link rel="icon" type="image/png" href="assets/app-icon.png">
+<style>
+:root{color-scheme:light;--paper:#faf7f0;--ink:#4c2c1d;--muted:#795c49;--red:#a50d17;--line:#d4b9a0}
+*{box-sizing:border-box}html{min-height:100%}body{margin:0;min-height:100svh;background:var(--paper) url("assets/canal-landscape.webp") center bottom/cover fixed no-repeat;color:var(--ink);font:15px/1.6 "Microsoft YaHei UI","Segoe UI",sans-serif}
+.stage{min-height:calc(100svh - 60px);display:grid;place-items:center;padding:32px 24px 198px}.center{width:min(792px,100%);text-align:center}
+.brand{margin:0}.brand img{display:block;width:470px;max-width:90%;height:auto;aspect-ratio:1.5;object-fit:contain;margin:0 auto}.motto{font:20px/1.7 "SimSun","Songti SC",serif;letter-spacing:.16em;margin:16px 0 20px;white-space:nowrap}
+form{display:flex;align-items:center;gap:17px;width:100%;height:70px;background:#fffdf9;border:1px solid var(--line);border-radius:38px;padding:7px 8px 7px 24px;box-shadow:0 6px 18px #5d301110;transition:border-color .15s,box-shadow .15s}
+form:hover{box-shadow:0 7px 22px #5d30111c}form:focus-within{border-color:#ad3e35;box-shadow:0 0 0 3px #a50d1710}.search-icon{width:24px;height:24px;flex:0 0 24px;opacity:.8}
+input,select,button{font:inherit}input{min-width:0;flex:1;width:0;border:0;outline:0;background:transparent;color:var(--ink);font-size:16px;padding:8px 0}input::placeholder{color:#765e50}
+select{border:0;border-left:1px solid #dac6b4;background:transparent;color:#654b3a;font-size:14px;width:106px;max-width:106px;padding:3px 8px 3px 17px;cursor:pointer}
+.submit{display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border:1px solid #910913;border-radius:50%;background:var(--red);cursor:pointer}.submit:hover{background:#850b12}.submit img{width:25px;height:25px;filter:brightness(0) invert(1)}
+:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin-top:24px}.links a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-size:15px;padding:9px 30px;border-radius:10px;transition:background .15s;white-space:nowrap;position:relative}.links a+a::before{content:"";position:absolute;left:0;height:18px;border-left:1px solid #d7bea588}.links a:hover{background:#fff9;color:var(--red)}.links img{width:33px;height:33px;object-fit:contain}
+.links img.site-people{object-fit:cover;object-position:left}.links img.site-news{width:41px}
+footer{min-height:60px;display:flex;align-items:center;justify-content:center;gap:20px;padding:12px 24px 22px;color:#732d1d;font:14px/26px "SimSun",serif;letter-spacing:.4em;text-align:center}footer::before,footer::after{content:"";width:55px;border-top:1px solid #a58267}
+@media(max-width:720px){.stage{padding:28px 22px 100px}.brand img{width:350px}.motto{font-size:16px;letter-spacing:.08em;white-space:normal;max-width:100%;text-wrap:balance;margin-top:14px}.links a{padding:10px 13px;gap:8px;font-size:12px}.links img{width:25px;height:25px}.links a+a::before{display:none}form{height:62px;gap:10px;padding-left:18px}input{font-size:14px}select{width:83px;max-width:83px;font-size:12px;padding-left:10px}.submit{width:46px;height:46px;flex-basis:46px}.search-icon{width:21px;height:21px;flex-basis:21px}}
+@media(max-width:440px){.brand img{max-width:96%}.links{max-width:320px;margin:20px auto 0}.links a{width:50%;justify-content:center}.motto{font-size:14px}form{gap:8px}.stage{padding-inline:16px}select{width:74px;max-width:74px}.search-icon{width:18px;height:18px;flex-basis:18px}}
+@media(max-height:780px) and (min-width:721px){.stage{padding-block:24px 100px}.brand img{width:340px}.motto{font-size:17px;margin:10px 0 16px}.links{margin-top:15px}}
+@media(prefers-reduced-motion:reduce){form,.links a{transition:none}}
+</style></head><body>
+<main class="stage"><div class="center">
+<header class="brand"><img src="assets/brand-lockup.png" alt="红旗渠爱国浏览器"><p class="motto">自力更生 · 艰苦创业 · 团结协作 · 无私奉献</p></header>
+<form id="search" action="https://www.bing.com/search" method="get">
+<img class="search-icon" src="assets/search.svg" alt="">
+<input id="query" name="q" type="text" placeholder="搜索，或输入网址" aria-label="搜索内容或网址" autocomplete="off" required>
+<select id="engine" aria-label="搜索引擎"><option value="bing">必应</option><option value="google">Google</option><option value="duckduckgo">DuckDuckGo</option></select>
+<button class="submit" type="submit" aria-label="搜索或前往网址"><img src="assets/arrow-right.svg" alt=""></button>
+</form>
+<nav class="links" aria-label="常用网站"><a href="https://www.gov.cn/"><img class="site-gov" src="assets/gov.png" alt=""><span>中国政府网</span></a>
+<a href="https://www.12371.cn/"><img class="site-cpc" src="assets/cpc.png" alt=""><span>共产党员网</span></a>
+<a href="https://www.people.com.cn/"><img class="site-people" src="assets/people.png" alt=""><span>人民网</span></a>
+<a href="https://www.news.cn/"><img class="site-news" src="assets/news.png" alt=""><span>新华网</span></a></nav>
+</div></main><footer>为人民服务</footer>
+<script>
+'use strict';
+const engines={bing:'https://www.bing.com/search',google:'https://www.google.com/search',duckduckgo:'https://duckduckgo.com/'};
+const form=document.getElementById('search'),engine=document.getElementById('engine'),query=document.getElementById('query');
+try{const saved=localStorage.getItem('hongqiqu.engine');if(Object.hasOwn(engines,saved))engine.value=saved}catch{}
+function updateEngine(){form.action=engines[engine.value];try{localStorage.setItem('hongqiqu.engine',engine.value)}catch{}}
+updateEngine();engine.addEventListener('change',updateEngine);
+function destination(raw,key){const value=raw.trim();if(/^https?:\/\//i.test(value)){try{return new URL(value).href}catch{}}if(!/\s/.test(value)&&/^(?:localhost(?::\d+)?|(?:[a-z0-9\u0080-\uffff-]+\.)+[a-z\u0080-\uffff]{2,}|(?:\d{1,3}\.){3}\d{1,3})(?::\d+)?(?:[/?#].*)?$/i.test(value)){try{return new URL((/^localhost(?::|\/|$)/i.test(value)?'http://':'https://')+value).href}catch{}}return engines[key]+'?q='+encodeURIComponent(value)}
+form.addEventListener('submit',event=>{event.preventDefault();const value=query.value.trim();if(value)location.assign(destination(value,engine.value))});
+</script></body></html>

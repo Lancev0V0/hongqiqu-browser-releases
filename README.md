@@ -19,7 +19,7 @@ Firefox 引擎的自动更新由整包发布接管，维护者必须及时跟进
 ## 构建和发布
 
 1. 安装 7-Zip，使用 Windows PowerShell 7 / `pwsh` 和系统 .NET Framework 编译器。
-2. 运行 `./test.ps1`，再运行 `./build.ps1 -Version 1.0.0`。产物在 `dist/`。
+2. 运行 `./test.ps1`，再运行 `./build.ps1`。产物在 `dist/`。
 3. 更新 `build-config.json` 中的引擎版本与 Mozilla 官方 SHA-512，并同步第三方声明；自定义启动器版本使用 `X.Y.Z`。
 4. 提交变更并推送 `vX.Y.Z` 标签。GitHub Actions 自动测试、构建、上传安装 EXE、完整更新 ZIP 和校验文件，上传完成才公开 Release。
 

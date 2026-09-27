@@ -55,11 +55,15 @@ namespace HongqiBrowser {
    return result;
   }
   public static void Activate(Process p) {foreach(IntPtr h in WindowsForProcess(p.Id)){ShowWindow(h,9);SetForegroundWindow(h);break;}}
-  public static void Apply(IntPtr hwnd,string root,Icon small,Icon big,bool properties) {
+  public static void Apply(IntPtr hwnd,string root,Icon small,Icon big) {
    IntPtr ignored;SendMessageTimeout(hwnd,0x80,IntPtr.Zero,small.Handle,2,500,out ignored);SendMessageTimeout(hwnd,0x80,new IntPtr(1),big.Handle,2,500,out ignored);
-   if(!properties)return;Guid iid=typeof(IPropertyStore).GUID;IPropertyStore store;
+   Guid iid=typeof(IPropertyStore).GUID;IPropertyStore store;
    Marshal.ThrowExceptionForHR(SHGetPropertyStoreForWindow(hwnd,ref iid,out store));
-   try{Put(store,3,Path.Combine(root,"app.ico")+",0");Put(store,2,"\""+Path.Combine(root,"HongqiBrowser.exe")+"\"");Put(store,4,"红旗渠爱国浏览器");Put(store,5,AppId);store.Commit();}finally{Marshal.ReleaseComObject(store);}
+   try{
+    var key=new PropertyKey(5);PropVariant current;store.GetValue(ref key,out current);
+    bool matches=current.vt==31 && Marshal.PtrToStringUni(current.value)==AppId;if(current.vt==31)current.Dispose();
+    if(!matches){Put(store,3,Path.Combine(root,"app.ico")+",0");Put(store,2,"\""+Path.Combine(root,"HongqiBrowser.exe")+"\"");Put(store,4,"红旗渠爱国浏览器");Put(store,5,AppId);store.Commit();}
+   }finally{Marshal.ReleaseComObject(store);}
   }
  }
 }

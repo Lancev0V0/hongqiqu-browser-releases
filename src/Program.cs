@@ -51,8 +51,8 @@ namespace HongqiBrowser {
  sealed class Launcher:Form {
   readonly string root,app;
   readonly Label detail=new Label(),versionLabel=new Label();readonly ProgressBar progress=new ProgressBar();readonly Button retry=new Button(),exit=new Button();
-  readonly CancellationTokenSource cancel=new CancellationTokenSource();readonly HashSet<IntPtr> branded=new HashSet<IntPtr>();
-  readonly System.Windows.Forms.Timer watch=new System.Windows.Forms.Timer();Icon small,big;Process browser;bool busy;
+  readonly CancellationTokenSource cancel=new CancellationTokenSource();
+  readonly System.Windows.Forms.Timer watch=new System.Windows.Forms.Timer();Icon small,big;Process browser;bool busy,observedWindow;DateTime startupDeadline;
   public Launcher(string installRoot,string appRoot) {
    root=installRoot;app=appRoot;Text=Program.Product;ClientSize=new Size(540,290);StartPosition=FormStartPosition.CenterScreen;FormBorderStyle=FormBorderStyle.FixedDialog;MaximizeBox=false;BackColor=Color.FromArgb(250,247,240);Font=new Font("Microsoft YaHei UI",10);
    Icon=new Icon(Path.Combine(app,"app.ico"));
@@ -110,11 +110,21 @@ namespace HongqiBrowser {
     Program.Log("BROWSER_STARTED version="+Program.Version+" pid="+browser.Id);
    }
    using(var source=new MemoryStream(File.ReadAllBytes(Path.Combine(app,"app.ico"))))using(var original=new Icon(source)){small=new Icon(original,32,32);big=new Icon(original,256,256);}
-   watch.Start();BrandWindows();Hide();ShowInTaskbar=false;
+   startupDeadline=DateTime.UtcNow.AddSeconds(60);observedWindow=false;watch.Start();BrandWindows();Hide();ShowInTaskbar=false;
   }
   void BrandWindows() {
    if(browser==null)return;
-   try{if(browser.HasExited){Close();return;}foreach(IntPtr hwnd in WindowsBrand.WindowsForProcess(browser.Id)){WindowsBrand.Apply(hwnd,root,small,big,!branded.Contains(hwnd));branded.Add(hwnd);}}
+   try{
+    // Firefox's signed Windows launcher can exit after spawning its real browser process.
+    if(browser.HasExited){
+     var actual=WindowsBrand.BrowsersUnder(root);
+     if(actual.Count>0){browser.Dispose();browser=actual[0];for(int i=1;i<actual.Count;i++)actual[i].Dispose();Program.Log("BROWSER_ATTACHED pid="+browser.Id);}
+     else if(observedWindow){Close();return;}
+     else if(DateTime.UtcNow>startupDeadline){watch.Stop();ShowInTaskbar=true;Show();Failure("Firefox 未能完成启动，请重试。");return;}
+     else return;
+    }
+    foreach(IntPtr hwnd in WindowsBrand.WindowsForProcess(browser.Id)){WindowsBrand.Apply(hwnd,root,small,big);observedWindow=true;}
+   }
    catch(Exception e){Program.Log("ICON "+e.Message);}
   }
   protected override void Dispose(bool disposing){if(disposing){watch.Dispose();cancel.Dispose();if(small!=null)small.Dispose();if(big!=null)big.Dispose();if(browser!=null)browser.Dispose();}base.Dispose(disposing);}

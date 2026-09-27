@@ -25,6 +25,14 @@ Firefox 引擎的自动更新由整包发布接管，维护者必须及时跟进
 
 本地构建可传入 `-FirefoxInstaller`、`-NsisPath`、`-SevenZipPath` 和 `-BuildRoot`。构建会同时验证 Mozilla 安装文件 SHA-512 和 Authenticode 签名。不得在已发布版本下替换文件；发布新版本。
 
+## 1.0.1 验证记录（2026-09-27）
+
+- Windows 实机安装成功，并完成从 1.0.0 到 GitHub 正式版本 1.0.1 的下载、校验、切换和重新启动。
+- 运行窗口的 32 / 256 像素图标与自定义图标完全一致；桌面快捷方式和窗口使用同一个独立 AppUserModelID，任务栏再次启动入口指向更新启动器。
+- 升级前后的书签记录一致；发行 ZIP 检查未包含书签库、Cookie、登录凭据或制作者的个人配置。
+- 28 项更新规则与异常恢复测试通过；使用正式更新代码访问公开 GitHub 源、下载、SHA-256 校验和解压通过。
+- [GitHub Windows 云端构建通过](https://github.com/Lancev0V0/hongqiqu-browser-releases/actions/runs/36311504471)。手工触发的此轮检查覆盖构建与产物上传，标签发布步骤未在此轮执行；1.0.1 正式 Release 已单独上传并核对远端摘要。
+
 ## 签名与来源
 
 启动器和安装程序当前未购买代码签名证书，Windows 可能提示未知发布者。Firefox 内核为未经修改的 Mozilla 官方签名文件。本项目不是 Mozilla 或任何政府机构的官方产品。组件来源与许可证见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。

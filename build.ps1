@@ -64,16 +64,8 @@ if (-not $NsisPath) {
   $nsisDir = Join-Path $BuildRoot ('nsis-'+$config.nsisVersion)
   $NsisPath = Join-Path $nsisDir 'makensis.exe'
   if (-not (Test-Path -LiteralPath $NsisPath)) {
-    $nsisZip = Join-Path $BuildRoot ('nsis-'+$config.nsisVersion+'.zip')
-    $verified = $false
-    foreach ($mirror in @('https://netix.dl.sourceforge.net','https://pilotfiber.dl.sourceforge.net','https://downloads.sourceforge.net')) {
-      try {
-        Invoke-WebRequest -UseBasicParsing -TimeoutSec 90 -Uri ($mirror+'/project/nsis/NSIS%203/'+$config.nsisVersion+'/nsis-'+$config.nsisVersion+'.zip') -OutFile $nsisZip
-        if ((Get-FileHash -LiteralPath $nsisZip -Algorithm SHA256).Hash -eq $config.nsisSha256) { $verified=$true; break }
-        Write-Warning ('NSIS mirror returned unexpected content: '+$mirror)
-      } catch { Write-Warning ('NSIS mirror failed: '+$mirror+'; '+$_.Exception.Message) }
-    }
-    if (-not $verified) { throw 'No NSIS mirror supplied the pinned SHA256; build stopped.' }
+    $nsisZip = Join-Path $PSScriptRoot ('build-tools\nsis-'+$config.nsisVersion+'.zip')
+    if ((Get-FileHash -LiteralPath $nsisZip -Algorithm SHA256).Hash -ne $config.nsisSha256) { throw 'NSIS tool archive SHA256 mismatch; build stopped.' }
     Expand-Archive -LiteralPath $nsisZip -DestinationPath $BuildRoot -Force
   }
 }
